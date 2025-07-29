@@ -1,0 +1,4 @@
+id;title;description;dueDate;priority;done
+1;Einkaufen;Milch und Brot;2025-08-01;MEDIUM;false
+2;Java üben;Teil 3 erledigen;2025-07-29;HIGH;true
+3;Zimmer aufräumen;;2025-07-31;LOW;false
