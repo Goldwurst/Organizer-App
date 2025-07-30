@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import de.organizer.util.Category;
 import de.organizer.util.Priority;
 
 import java.time.LocalDate;
@@ -16,7 +17,7 @@ public class TaskTest {
 	//Setup-Block vor jedem Test
 	@BeforeEach
 	void setUp() {
-		task = new Task(1L, "Testaufgabe", "Beschreibung", LocalDate.of(2025,  8, 1), Priority.HIGH);
+		task = new Task(1L, Category.HEALTH, "Testaufgabe", "Beschreibung", LocalDate.of(2025,  8, 1), LocalDate.of(2025, 7, 28), Priority.HIGH);
 	}
 	
 	//Test 1: done-Status prüfen

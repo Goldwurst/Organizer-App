@@ -15,9 +15,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		        Task t1 = new Task(IDGenerator.generateID(), "Einkaufen", "Milch und Brot", LocalDate.of(2025, 8, 1), Priority.MEDIUM);
-		        Task t2 = new Task(IDGenerator.generateID(), "Java üben", "Teil 3 erledigen", LocalDate.now(), Priority.HIGH);
-		        Task t3 = new Task(IDGenerator.generateID(), "Zimmer aufräumen", "", LocalDate.now().plusDays(2), Priority.LOW);
+		        Task t1 = new Task(IDGenerator.generateID(), null, "Einkaufen", "Milch und Brot", LocalDate.of(2025, 8, 1), null, Priority.MEDIUM);
+		        Task t2 = new Task(IDGenerator.generateID(), null, "Java üben", "Teil 3 erledigen", LocalDate.now(), null, Priority.HIGH);
+		        Task t3 = new Task(IDGenerator.generateID(), null, "Zimmer aufräumen", "", LocalDate.now().plusDays(2), null, Priority.LOW);
 
 		        t2.toggleDone();
 		        

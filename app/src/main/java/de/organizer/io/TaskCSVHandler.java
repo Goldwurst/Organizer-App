@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import de.organizer.model.Task;
+import de.organizer.util.Category;
 import de.organizer.util.Priority;
 
 public class TaskCSVHandler {
@@ -48,10 +49,10 @@ public class TaskCSVHandler {
 			while ((line = reader.readLine()) != null) {
 				
 				String[] data = line.split(";");
-				if (data.length != 6) continue;
+				if (data.length != 8) continue;
 				
-				taskList.add(new Task(Long.parseLong(data[0]), data[1], data[2], LocalDate.parse(data[3]),
-						Priority.valueOf(data[4]), Boolean.parseBoolean(data[5])));
+				taskList.add(new Task(Long.parseLong(data[0]), Category.valueOf(data[1]), data[2], data[3], LocalDate.parse(data[4]),
+						(data[5] == "") ? null : LocalDate.parse(data[5]), Priority.valueOf(data[6]), Boolean.parseBoolean(data[7])));
 			}
 		}
 		catch (IOException e) {

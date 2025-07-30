@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import de.organizer.model.Task;
+import de.organizer.util.Category;
 import de.organizer.util.IDGenerator;
 import de.organizer.util.Priority;
 
@@ -22,9 +23,9 @@ public class ArrangeTaskListTest {
 		
 		IDGenerator.reset();
 		
-		Task task1 = new Task(IDGenerator.generateID(), "Z Aufgabe", "", LocalDate.of(2025, 1, 1), Priority.MEDIUM);
-		Task task2 = new Task(IDGenerator.generateID(), "A Aufgabe", "", LocalDate.of(2015, 1, 1), Priority.HIGH);
-		Task task3 = new Task(IDGenerator.generateID(), "M Aufgabe", "", LocalDate.of(2020, 1, 1), Priority.LOW);
+		Task task1 = new Task(IDGenerator.generateID(), Category.OTHER, "Z Aufgabe", "", LocalDate.of(2025, 1, 1), LocalDate.now(), Priority.MEDIUM);
+		Task task2 = new Task(IDGenerator.generateID(), Category.WORK, "A Aufgabe", "", LocalDate.of(2015, 1, 1), LocalDate.of(2010, 1, 1), Priority.HIGH);
+		Task task3 = new Task(IDGenerator.generateID(), Category.FINANCE, "M Aufgabe", "", LocalDate.of(2020, 1, 1), null, Priority.LOW);
 
 		tasks = new ArrayList<>();
 		tasks.add(task1);

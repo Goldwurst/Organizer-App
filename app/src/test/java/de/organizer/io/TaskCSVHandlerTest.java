@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import de.organizer.model.Task;
+import de.organizer.util.Category;
 import de.organizer.util.IDGenerator;
 import de.organizer.util.Priority;
 
@@ -36,8 +37,8 @@ public class TaskCSVHandlerTest {
 	@Test
 	void testSaveAndLoadTasks() {
 		
-		Task task1 = new Task(IDGenerator.generateID(), "Test 1", "Beschreibung 1", LocalDate.of(2025, 1, 1), Priority.HIGH);
-		Task task2 = new Task(IDGenerator.generateID(), "Test 2", "Beschreibung 2", LocalDate.now(), Priority.URGENT);
+		Task task1 = new Task(IDGenerator.generateID(), Category.FINANCE, "Test 1", "Beschreibung 1", LocalDate.of(2025, 1, 1), null, Priority.HIGH);
+		Task task2 = new Task(IDGenerator.generateID(), null, "Test 2", "Beschreibung 2", LocalDate.now(), LocalDate.now(), Priority.URGENT);
 		task2.setDone(true);
 		
 		handler.saveTasksAsCSV(List.of(task1, task2), tempFile); //Speichern
