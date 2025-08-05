@@ -1,48 +1,69 @@
 package de.organizer.model;
 
-
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import de.organizer.util.Category;
 import de.organizer.util.Priority;
+import de.organizer.exception.MissingFieldException;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-public class TaskTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-	private Task task;
-	
-	//Setup-Block vor jedem Test
-	@BeforeEach
-	void setUp() {
-		task = new Task(1L, Category.HEALTH, "Testaufgabe", "Beschreibung", LocalDate.of(2025,  8, 1), LocalDate.of(2025, 7, 28), Priority.HIGH);
-	}
-	
-	//Test 1: done-Status prüfen
-	@Test
-	void testInitialDoneState() {
-		assertFalse(task.toString().contains("\u2705"), "Task sollte initial unerledigt sein");
-	}
-	
-	//Test 2: Toggle-Verhalten prüfen
-	@Test
-	void testToggleDone() {
-		task.toggleDone();
-		assertTrue(task.toString().contains("\u2705"), "Task sollte nach toggle erledigt sein");
-	}
-	
-	//Test 3: Exportdaten prüfen
-	@Test
-	void testExportData() {
-		String[] data = task.getExportData();
-		assertEquals("1", data[0]);
-		assertEquals("Testaufgabe", data[1]);
-		assertEquals("Beschreibung", data[2]);
-		assertEquals("2025-08-01", data[3]);
-		assertEquals("HIGH", data[4]);
-		assertEquals("false", data[5]);
-	}	
+class TaskTest {
+
+    @Test
+    void testTaskBuilderCreatesTaskWithMandatoryFields() {
+        Task task = new Task.Builder()
+                .category(Category.WORK)
+                .title("Testaufgabe")
+                .priority(Priority.HIGH)
+                .build();
+
+        assertNotNull(task.getId());
+        assertNotNull(task.getCreatedAt());
+        assertEquals(Category.WORK, task.getCategory());
+        assertEquals("Testaufgabe", task.getTitle());
+        assertEquals(Priority.HIGH, task.getPriority());
+        assertFalse(task.isDone());
+    }
+
+    @Test
+    void testTaskBuilderThrowsExceptionIfMandatoryFieldsMissing() {
+        Task.Builder builder = new Task.Builder();
+        Exception exception = assertThrows(MissingFieldException.class, builder::build);
+        assertTrue(exception.getMessage().contains("Kategorie"));
+    }
+
+    @Test
+    void testToggleDone() {
+        Task task = new Task.Builder()
+                .category(Category.SHOPPING)
+                .title("Erledigen")
+                .priority(Priority.LOW)
+                .build();
+
+        assertFalse(task.isDone());
+        task.toggleDone();
+        assertTrue(task.isDone());
+    }
+
+    @Test
+    void testToCsvRow() {
+        LocalDateTime now = LocalDateTime.now();
+        Task task = Task.fromCsv(42L, now, Category.HEALTH, "CSV-Test", "Beschreibung",
+                LocalDate.of(2024, 6, 1), null, Priority.MEDIUM, true);
+
+        String[] csvRow = task.toCsvRow();
+        assertEquals("42", csvRow[0]);
+        assertEquals(now.toString(), csvRow[1]);
+        assertEquals(Category.HEALTH.name(), csvRow[2]);
+        assertEquals("CSV-Test", csvRow[3]);
+        assertEquals("Beschreibung", csvRow[4]);
+        assertEquals("2024-06-01", csvRow[5]);
+        assertEquals("", csvRow[6]);
+        assertEquals(Priority.MEDIUM.name(), csvRow[7]);
+        assertEquals("true", csvRow[8]);
+    }
 }
 

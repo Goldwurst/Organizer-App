@@ -15,7 +15,12 @@ import de.organizer.model.Task;
 import de.organizer.util.Category;
 import de.organizer.util.Priority;
 
-public class TaskCSVHandler {
+public final class TaskCSVHandler {
+	
+	private TaskCSVHandler() {
+		// Utility-Klasse darf nicht instanziiert werden
+		throw new AssertionError("Utility-Klasse darf nicht instanziiert werden");
+	}
 
 	/**
      * Speichert die Liste von Tasks als CSV.
@@ -43,7 +48,7 @@ public class TaskCSVHandler {
      * @return Liste der eingelesenen Tasks
      * @throws IOException wenn beim Lesen ein Fehler auftritt
      */
-	public List<Task> loadTasksFromCSV(File file) throws IOException {
+	public static List<Task> loadTasksFromCSV(File file) throws IOException {
 		
 		List<Task> taskList = new ArrayList<>();
 		
@@ -61,7 +66,7 @@ public class TaskCSVHandler {
 	            Category  category   		= Category.valueOf(data[2]);
                 String  title        		= data[3];
                 String  description 		= data[4];
-                LocalDate dueDate    		= data[5].isEmpty() ? null : LocalDate.parse(data[3]);
+                LocalDate dueDate    		= data[5].isEmpty() ? null : LocalDate.parse(data[5]);
                 LocalDateTime reminderDate  = data[6].isEmpty() ? null : LocalDateTime.parse(data[6]);
                 Priority priority    		= Priority.valueOf(data[7]);
                 boolean done        		= Boolean.parseBoolean(data[8]);
