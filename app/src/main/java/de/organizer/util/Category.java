@@ -1,8 +1,24 @@
 package de.organizer.util;
 
+/**
+ * Das Enum Category definiert verschiedene Kategorien für die Anwendung.
+ * Jede Kategorie ist mit einem deutschen Label versehen.
+ *
+ * Kategorien:
+ * - WORK: Arbeit
+ * - PERSONAL: Privat
+ * - SHOPPING: Einkaufen
+ * - HEALTH: Gesundheit
+ * - FINANCE: Finanzen
+ * - OTHER: Sonstiges
+ *
+ * Methoden:
+ * - getLabel(): Gibt das Label der Kategorie zurück.
+ * - toString(): Gibt das Label als String zurück.
+ */
+
 public enum Category {
 
-	//Kategorien definieren und mit dt.Begriffen labeln
 	WORK("Arbeit"),
 	PERSONAL("Privat"),
 	SHOPPING("Einkaufen"),
@@ -22,7 +38,7 @@ public enum Category {
 	
 	@Override
 	public String toString() {
-		return label;
+		return label != null ? label : "";
 	}
 	
 }

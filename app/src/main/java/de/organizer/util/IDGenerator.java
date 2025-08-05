@@ -1,32 +1,33 @@
 package de.organizer.util;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+/**
+ * Utility-Klasse zur Generierung fortlaufender eindeutiger IDs.
+ * Die Klasse ist nicht instanziierbar und thread-sicher.
+ */
+public final class IDGenerator {
 
-public class IDGenerator {
-	
-	private static long currentID = 0;
-	//Thread-sichere Map für ID -> Zeitstempel
-	private static final Map<Long, LocalDateTime> idTimestamps = Collections.synchronizedMap(new HashMap<>());
-	
-	//static -> globale Klassenvariable, die für alle Instanzen zählt
-	//synchronized -> sichert gegen gleichzeitiges Zugreifen ab
-	
-	public static synchronized long generateID() {
-		
-		long id = ++currentID;
-		idTimestamps.put(id, LocalDateTime.now());
-		return id;
-	}
-	
-	public static LocalDateTime getTimestamp(long id) {
-		return idTimestamps.get(id);
-	}
-	
-	public static synchronized void reset() {
-		currentID = 0;
-		idTimestamps.clear();
-	}
+    /** Aktuelle ID, wird bei jedem Aufruf erhöht. */
+    private static long currentID = 0;
+
+    /** Privater Konstruktor verhindert Instanziierung. */
+    private IDGenerator() {
+        // Utility-Klasse
+    }
+
+    /**
+     * Generiert eine neue eindeutige ID.
+     * Thread-sicher durch synchronized.
+     * @return die nächste eindeutige ID
+     */
+    public static synchronized long generateID() {
+        return ++currentID;
+    }
+
+    /**
+     * Setzt die ID zurück auf 0.
+     * Thread-sicher durch synchronized.
+     */
+    public static synchronized void reset() {
+        currentID = 0;
+    }
 }
